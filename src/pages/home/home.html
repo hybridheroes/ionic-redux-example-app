@@ -1,14 +1,20 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-navbar>
-</ion-header>
-
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+  <div *ngFor="let noteId of (notes$ | async).allIds">
+    {{(notes$ | async).byId[noteId].text}}
+  </div>
+  <div *ngFor="let reminder of (reminders$ | async)">
+    {{(notes$ | async).byId[reminder.noteId].text}} - {{reminder.time}}
+  </div>
+
+  <input type="text" placeholder="Add a note..." #input>
+  <button (click)="addNote(input.value)">Add note</button>
+  <select #note>
+    <option
+      *ngFor="let noteId of (notes$ | async).allIds"
+      [value]="(notes$ | async).byId[noteId].id">
+      {{(notes$ | async).byId[noteId].text}}
+    </option>
+  </select>
+  <input type="date" placeholder="Add a reminder..." #date>
+  <button (click)="addReminder(note.value, date.value)">Add reminder</button>
 </ion-content>

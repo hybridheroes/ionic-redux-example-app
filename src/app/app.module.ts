@@ -9,12 +9,38 @@ import { HomePage } from '../pages/home/home';
 import { rootReducer } from './reducers';
 import thunk from 'redux-thunk';
 
+export interface Action {
+  type: string,
+  payload?: any
+}
+
+export interface Notes {
+  byId: {[id: string]: Note},
+  allIds: string[]
+}
+
+export interface Note {
+  id: string;
+  text: string;
+}
+
+export interface Reminder {
+  id: string;
+  noteId: string;
+  time: string;
+}
+
 export interface AppState {
-  state: boolean;
+  notes: Notes,
+  reminders: Reminder[]
 }
 
 export const INITIAL_STATE = {
-  state: true
+  notes: {
+    byId: {},
+    allIds: []
+  },
+  reminders: []
 }
 
 @NgModule({
